@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hitster Bingo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-image: url('hitster-background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        /* Navigeringsrad */
+        .nav-bar {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .nav-btn:active { background-color: rgba(255, 255, 255, 0.3); }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            background-color: rgba(18, 18, 18, 0.85);
+            padding: 20px 15px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-sizing: border-box;
+        }
+        h1 { color: #f39c12; margin-top: 0; margin-bottom: 15px; font-size: 24px; }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: left;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .color-box { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+
+        .bingo-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-bottom: 20px;
+            aspect-ratio: 1 / 1;
+        }
+        .bingo-cell {
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.1s, opacity 0.2s;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .bingo-cell:active { transform: scale(0.92); }
+        
+        .bingo-cell.checked::after {
+            content: "X";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8), 0px 0px 2px rgba(0, 0, 0, 1);
+        }
+        .bingo-cell.checked {
+            opacity: 0.6;
+            filter: brightness(0.7);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #f39c12;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .action-btn:active { background-color: #e67e22; }
+
+        .c-ar2 { background-color: #e74c3c; }
+        .c-ar4 { background-color: #3498db; }
+        .c-artionde { background-color: #9b59b6; }
+        .c-sekelskifte { background-color: #2ecc71; }
+        .c-artist { background-color: #f1c40f; }
+    </style>
+</head>
+<body>
+
+<div class="nav-bar">
+    <a href="index.html" class="nav-btn">✕ Hem</a>
+    <a href="generator.html" class="nav-btn" style="border-color: #f39c12; color: #f39c12;">➔ Slumpa utmaning</a>
+</div>
+
+<div class="container">
+    <h1>Hitster Bingo</h1>
+    
+    <div class="legend">
+        <div class="legend-item"><div class="color-box c-ar2"></div> <span>Årtal ± 2 år (Röd)</span></div>
+        <div class="legend-item"><div class="color-box c-ar4"></div> <span>Årtal ± 4 år (Blå)</span></div>
+        <div class="legend-item"><div class="color-box c-artionde"></div> <span>Årtionde (Lila)</span></div>
+        <div class="legend-item"><div class="color-box c-sekelskifte"></div> <span>Före/Efter 2000 (Grön)</span></div>
+        <div class="legend-item" style="grid-column: span 2;"><div class="color-box c-artist"></div> <span>Artist (Gul)</span></div>
+    </div>
+
+    <div class="bingo-grid" id="bingoGrid"></div>
+
+    <button class="action-btn" onclick="genereraNyBricka()">Generera ny bricka</button>
+</div>
+
+<script>
+    const basFarger = ['c-ar2', 'c-ar4', 'c-artionde', 'c-sekelskifte', 'c-artist'];
+
+    function genereraNyBricka() {
+        if(confirm("Vill du verkligen starta ett nytt spel och rensa brickan?")) {
+            localStorage.removeItem('hitster_bingo_layout');
+            localStorage.removeItem('hitster_bingo_checked');
+            skapaBricka();
+        }
+    }
+
+    function skapaBricka() {
+        const grid = document.getElementById('bingoGrid');
+        grid.innerHTML = '';
+
+        let rutaPool = [];
+        
+        // Kolla om det redan finns en sparad bricka i telefonens minne
+        const sparadLayout = JSON.parse(localStorage.getItem('hitster_bingo_layout'));
+        const sparadeKryss = JSON.parse(localStorage.getItem('hitster_bingo_checked')) || [];
+
+        if (sparadLayout) {
+            rutaPool = sparadLayout;
+        } else {
+            // Skapa ny balanserad pool
+            basFarger.forEach(farg => {
+                for (let i = 0; i < 5; i++) { rutaPool.push(farg); }
+            });
+            // Blanda poolen
+            for (let i = rutaPool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [rutaPool[i], rutaPool[j]] = [rutaPool[j], rutaPool[i]];
+            }
+            // Spara den nya layouten
+            localStorage.setItem('hitster_bingo_layout', JSON.stringify(rutaPool));
+        }
+
+        // Bygg rutorna
+        for (let i = 0; i < 25; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('bingo-cell', rutaPool[i]);
+            cell.dataset.index = i;
+
+            // Om rutan var kryssad innan, lägg till krysset igen
+            if (sparadeKryss.includes(i)) {
+                cell.classList.add('checked');
+            }
+
+            cell.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                uppdateraSparadeKryss();
+            });
+
+            grid.appendChild(cell);
+        }
+    }
+
+    function uppdateraSparadeKryss() {
+        const checkedCells = document.querySelectorAll('.bingo-cell.checked');
+        const checkedIndices = [];
+        checkedCells.forEach(cell => {
+            checkedIndices.push(parseInt(cell.dataset.index));
+        });
+        localStorage.setItem('hitster_bingo_checked', JSON.stringify(checkedIndices));
+    }
+
+    // Läs in brickan direkt vid start
+    skapaBricka();
+</script>
+
+</body>
+</html>
