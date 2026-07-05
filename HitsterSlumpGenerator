@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitster Companion</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 { color: #f39c12; margin-bottom: 30px; }
+        label { display: block; margin: 15px 0 5px; text-align: left; font-weight: bold; }
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #2c2c2c;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #f39c12;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        button:active { background-color: #e67e22; }
+        #resultatBox {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #1e1e1e;
+            border: 2px dashed #f39c12;
+            display: none;
+        }
+        .utmaning-titel { font-size: 22px; font-weight: bold; color: #f1c40f; margin-bottom: 10px; }
+        .utmaning-info { font-size: 16px; color: #bdc3c7; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hitster Slumpare</h1>
+    
+    <label for="ar input">Låtens rätta år:</label>
+    <input type="number" id="arInput" placeholder="T.ex. 1994" pattern="\d*">
+
+    <label for="artistInput">Artist (frivilligt):</label>
+    <input type="text" id="artistInput" placeholder="T.ex. Roxette">
+
+    <button onclick="slumpaUtmaning()">Slumpa Utmaning!</button>
+
+    <div id="resultatBox">
+        <div class="utmaning-titel" id="utmaningTitel"></div>
+        <div class="utmaning-info" id="utmaningInfo"></div>
+    </div>
+</div>
+
+<script>
+function slumpaUtmaning() {
+    const ar = parseInt(document.getElementById('arInput').value);
+    const artist = document.getElementById('artistInput').value || "Okänd artist";
+
+    if (isNaN(ar)) {
+        alert("Vänligen mata in ett giltigt årtal först!");
+        return;
+    }
+
+    const valen = [
+        { titel: "Årtal ± 2 år", info: `Gissa årtal. Godkänt intervall: ${ar - 2} till ${ar + 2}` },
+        { titel: "Årtal ± 4 år", info: `Gissa årtal. Godkänt intervall: ${ar - 4} till ${ar + 4}` },
+        { titel: "Årtionde", info: `Vilket årtionde? Rätt svar: ${Math.floor(ar / 10) * 10}-talet` },
+        { titel: "Före eller efter 2000?", info: `Svar: ${ar < 2000 ? "Före år 2000" : "År 2000 eller senare"}` },
+        { titel: "Artist", info: `Vem sjunger? Rätt svar: ${artist}` }
+    ];
+
+    const slumpIndex = Math.floor(Math.random() * valen.length);
+    const vald = valen[slumpIndex];
+
+    document.getElementById('utmaningTitel').innerText = vald.titel;
+    document.getElementById('utmaningInfo').innerText = vald.info;
+    document.getElementById('resultatBox').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
