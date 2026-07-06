@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelinstruktioner - Hitster Bingo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-image: url('hitster-background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        
+        /* Navigeringsrad */
+        .nav-bar {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .nav-btn:active { background-color: rgba(255, 255, 255, 0.3); }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(18, 18, 18, 0.85);
+            padding: 30px 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-sizing: border-box;
+        }
+        h1 { color: #f39c12; margin-top: 0; margin-bottom: 20px; font-size: 28px; text-align: center; }
+        h2 { color: #f1c40f; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 3px solid #f39c12; padding-left: 8px; }
+        p { color: #bdc3c7; font-size: 15px; line-height: 1.6; margin: 0 0 15px 0; }
+        
+        ol, ul { color: #bdc3c7; font-size: 15px; line-height: 1.6; padding-left: 20px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        strong { color: #ffffff; }
+
+        .bonus-box {
+            background-color: rgba(243, 156, 18, 0.15);
+            border: 1px dashed #f39c12;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .bonus-box strong { color: #f39c12; }
+
+        .color-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.03);
+            padding: 8px;
+            border-radius: 6px;
+        }
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .c-ar2 { background-color: #e74c3c; }
+        .c-ar4 { background-color: #3498db; }
+        .c-artionde { background-color: #9b59b6; }
+        .c-sekelskifte { background-color: #2ecc71; }
+        .c-artist { background-color: #f1c40f; }
+    </style>
+</head>
+<body>
+
+<div class="nav-bar">
+    <a href="index.html" class="nav-btn">✕ Tillbaka till hem</a>
+</div>
+
+<div class="container">
+    <h1>Så spelar du Hitster Bingo</h1>
+    
+    <p>Välkommen till en spännande variant av Hitster där musiksmak, tidskänsla och bingostrategi möts! Det här spelet spelas tillsammans med det fysiska kortspelet Hitster (eller valfri musikstreamingtjänst).</p>
+
+    <h2>Förberedelser</h2>
+    <ol>
+        <li>Alla spelare öppnar <strong>Bingobrickan</strong> i sina egna telefoner och trycker på "Generera ny bricka". Alla får då en unik men balanserad bricka med 5 rutor av varje färg.</li>
+        <li>En gemensam telefon placeras i mitten av bordet med <strong>Slumpgeneratorn</strong> igång. Denna sköter spelets utmaningar.</li>
+    </ol>
+
+    <h2>Spelregler - Steg för steg</h2>
+    <ol>
+        <li><strong>Spela en låt:</strong> Turas om att skanna ett Hitster-kort (eller starta en hemlig låt).</li>
+        <li><strong>Slumpa utmaningen:</strong> Innan spelaren gissar, trycker ni på <strong>"Slumpa Utmaning!"</strong> i den gemensamma telefonen. Appen visar vilken typ av gissning som krävs för låten.</li>
+        <li><strong>Gör gissningen:</strong> Spelaren gör sin gissning baserat på vad appen kräver.</li>
+        <li><strong>Rätta och markera:</strong>
+            <ul>
+                <li>Om spelaren <strong>gissar rätt</strong> enligt utmaningens kriterier får denne leta upp en valfri ruta med <strong>samma färg</strong> på sin personliga bingobricka och trycka på den för att markera den med ett <strong>X</strong>.</li>
+                <li>Om spelaren gissar fel händer ingenting, och turen går vidare till nästa person.</li>
+            </ul>
+            <div class="bonus-box">
+                <strong>⭐ EXAKT ÅRTAL-BONUS:</strong> Om du lyckas gissa på <strong>exakt rätt år</strong> (gäller vid röd, blå eller lila utmaning) får du markera din ruta, men du får dessutom <strong>sudda ut en valfri ikryssad ruta från valfri motspelares bricka</strong>! Motspelaren trycker då bara på sin ruta igen så försvinner krysset.
+            </div>
+        </li>
+    </ol>
+
+    <h2>De 5 utmaningarna</h2>
+    <ul class="color-list">
+        <li class="color-item"><div class="dot c-ar2"></div> <div><strong>Röd (Årtal ± 2 år):</strong> Gissa år, med en felmarginal på +/- 2 år. <em>(Träffar du exakt? Aktivera bonusen!)</em></div></li>
+        <li class="color-item"><div class="dot c-ar4"></div> <div><strong>Blå (Årtal ± 4 år):</strong> Gissa år, med en generös felmarginal på +/- 4 år. <em>(Träffar du exakt? Aktivera bonusen!)</em></div></li>
+        <li class="color-item"><div class="dot c-artionde"></div> <div><strong>Lila (Årtionde):</strong> Gissa rätt årtionde (t.ex. 80-talet). <em>(Om du gissar på exakt år och har rätt aktiveras bonusen!)</em></div></li>
+        <li class="color-item"><div class="dot c-sekelskifte"></div> <div><strong>Grön (Före/Efter 2000):</strong> Gissa om låten släpptes före år 2000, eller år 2000 och senare.</div></li>
+        <li class="color-item"><div class="dot c-artist"></div> <div><strong>Gul (Artist):</strong> Glöm årtalen – du måste pricka artistens/gruppens namn.</div></li>
+    </ul>
+
+    <h2>Hur man vinner</h2>
+    <p>Den spelare som först lyckas få <strong>5 markerade rutor i en rad</strong> (vågrätt, lodrätt eller diagonalt) ropar <strong>BINGO!</strong> och vinner spelet.</p>
+</div>
+
+</body>
+</html>
