@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitsterbingo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-image: url('hitster-background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            background-color: rgba(18, 18, 18, 0.85);
+            padding: 40px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        h1 { 
+            color: #f39c12; 
+            margin-top: 0; 
+            margin-bottom: 10px; 
+            font-size: 32px;
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+        .subtitle {
+            color: #bdc3c7;
+            font-size: 15px;
+            margin-bottom: 35px;
+            line-height: 1.4;
+        }
+        .menu-link {
+            display: block;
+            padding: 18px 15px;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px solid #f39c12;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.1);
+        }
+        .menu-link:active {
+            background-color: #f39c12;
+            transform: scale(0.98);
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
+        }
+        .menu-link span {
+            display: block;
+            font-size: 12px;
+            color: #bdc3c7;
+            font-weight: normal;
+            margin-top: 4px;
+        }
+        .menu-link:active span { color: #ffffff; }
+        
+        .menu-link.secondary {
+            border-color: #bdc3c7;
+            margin-top: 25px;
+        }
+        .menu-link.secondary:active {
+            background-color: #bdc3c7;
+            color: #121212;
+        }
+        .menu-link.secondary:active span { color: #121212; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hitsterbingo</h1>
+    <div class="subtitle">Välkommen! Välj ett verktyg nedan för att starta spelkvällen.</div>
+    
+    <a href="generator.html" class="menu-link">
+        Slumpgenerator
+        <span>Slumpa nästa musikutmaning till bordet</span>
+    </a>
+
+    <a href="hitsterbingo.html" class="menu-link">
+        Bingobricka
+        <span>Öppna din personliga 5x5 bingobricka</span>
+    </a>
+
+    <a href="regler.html" class="menu-link secondary">
+        Spelinstruktioner
+        <span>Hur man spelar, rättar och vinner</span>
+    </a>
+</div>
+
+</body>
+</html>
