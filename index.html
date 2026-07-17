@@ -4,108 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitsterbingo</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-image: url('hitster-background.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-color: #121212;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            background-color: rgba(18, 18, 18, 0.85);
-            padding: 40px 20px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        h1 { 
-            color: #f39c12; 
-            margin-top: 0; 
-            margin-bottom: 10px; 
-            font-size: 32px;
-            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
-        }
-        .subtitle {
-            color: #bdc3c7;
-            font-size: 15px;
-            margin-bottom: 35px;
-            line-height: 1.4;
-        }
-        .menu-link {
-            display: block;
-            padding: 18px 15px;
-            margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 2px solid #f39c12;
-            border-radius: 12px;
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.1);
-        }
-        .menu-link:active {
-            background-color: #f39c12;
-            transform: scale(0.98);
-            box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
-        }
-        .menu-link span {
-            display: block;
-            font-size: 12px;
-            color: #bdc3c7;
-            font-weight: normal;
-            margin-top: 4px;
-        }
-        .menu-link:active span { color: #ffffff; }
-        
-        .menu-link.secondary {
-            border-color: #bdc3c7;
-            margin-top: 25px;
-        }
-        .menu-link.secondary:active {
-            background-color: #bdc3c7;
-            color: #121212;
-        }
-        .menu-link.secondary:active span { color: #121212; }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>Hitsterbingo</h1>
+<main class="container">
+    <svg class="vinyl-logo" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="#0c0a1f" stroke="url(#gHomeRing)" stroke-width="2"/>
+        <circle cx="50" cy="50" r="38" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="30" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="22" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="15" fill="url(#gHomeLabel)"/>
+        <circle cx="50" cy="50" r="4" fill="#0c0a1f"/>
+        <defs>
+            <linearGradient id="gHomeRing" x1="0" y1="0" x2="100" y2="100">
+                <stop stop-color="#ff2e88"/>
+                <stop offset="0.5" stop-color="#a855f7"/>
+                <stop offset="1" stop-color="#22d3ee"/>
+            </linearGradient>
+            <linearGradient id="gHomeLabel" x1="0" y1="0" x2="100" y2="100">
+                <stop stop-color="#ff2e88"/>
+                <stop offset="1" stop-color="#22d3ee"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <div class="eyebrow">Party edition</div>
+    <h1 class="title">Hitsterbingo</h1>
     <div class="subtitle">Välkommen! Välj ett verktyg nedan för att starta spelkvällen.</div>
-    
-    <a href="generator.html" class="menu-link">
-        Slumpgenerator
-        <span>Slumpa nästa musikutmaning till bordet.</span>
+
+    <a href="generator.html" class="menu-link primary">
+        <span class="icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1a0b14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="4"/>
+                <circle cx="8" cy="8" r="1.4" fill="#1a0b14" stroke="none"/>
+                <circle cx="16" cy="8" r="1.4" fill="#1a0b14" stroke="none"/>
+                <circle cx="12" cy="12" r="1.4" fill="#1a0b14" stroke="none"/>
+                <circle cx="8" cy="16" r="1.4" fill="#1a0b14" stroke="none"/>
+                <circle cx="16" cy="16" r="1.4" fill="#1a0b14" stroke="none"/>
+            </svg>
+        </span>
+        <span class="label-block">
+            <span class="label">Slumpgenerator</span>
+            <span class="desc">Slumpa nästa musikutmaning till bordet.</span>
+        </span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
     </a>
 
     <a href="hitsterbingo.html" class="menu-link">
-        Bingobricka
-        <span>Öppna din personliga 5x5 bingobricka</span>
+        <span class="icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            </svg>
+        </span>
+        <span class="label-block">
+            <span class="label">Bingobricka</span>
+            <span class="desc">Öppna din personliga 5x5 bingobricka</span>
+        </span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
     </a>
 
     <a href="regler.html" class="menu-link secondary">
-        Spelinstruktioner
-        <span>Hur man spelar, rättar och vinner.</span>
+        <span class="icon-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f5f3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z"/>
+            </svg>
+        </span>
+        <span class="label-block">
+            <span class="label">Spelinstruktioner</span>
+            <span class="desc">Hur man spelar, rättar och vinner.</span>
+        </span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
     </a>
-</div>
+</main>
 
 </body>
 </html>

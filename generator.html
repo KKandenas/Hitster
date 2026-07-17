@@ -4,136 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hitster Slumpare</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-image: url('hitster-background.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-color: #121212;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-        
-        /* Navigeringsrad */
-        .nav-bar {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .nav-btn {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .nav-btn:active { background-color: rgba(255, 255, 255, 0.3); }
-
-        .container {
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            background-color: rgba(18, 18, 18, 0.85);
-            padding: 30px 20px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            box-sizing: border-box;
-        }
-        h1 { color: #f39c12; margin-top: 0; margin-bottom: 30px; font-size: 26px; }
-        .action-btn {
-            width: 100%;
-            padding: 18px;
-            background-color: #f39c12;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-            transition: background 0.2s, transform 0.1s;
-        }
-        .action-btn:active { 
-            background-color: #e67e22; 
-            transform: scale(0.98);
-        }
-        #resultatBox {
-            margin-top: 30px;
-            padding: 25px 15px;
-            border-radius: 8px;
-            background-color: rgba(30, 30, 30, 0.95);
-            border: 3px solid #ffffff;
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        .utmaning-titel { font-size: 26px; font-weight: bold; margin-bottom: 12px; }
-        .utmaning-info { font-size: 16px; color: #bdc3c7; line-height: 1.4; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="nav-bar">
-    <a href="index.html" class="nav-btn">✕ Hem</a>
-    <a href="hitsterbingo.html" class="nav-btn" style="border-color: #f39c12; color: #f39c12;">Visa Bingo ➔</a>
-</div>
+<nav class="nav-bar">
+    <a href="index.html" class="nav-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        Hem
+    </a>
+    <a href="hitsterbingo.html" class="nav-btn accent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Visa Bingo
+    </a>
+</nav>
 
-<div class="container">
-    <h1>Hitster Slumpare</h1>
-    
-    <button class="action-btn" onclick="slumpaUtmaning()">Slumpa Utmaning!</button>
+<main class="container">
+    <div class="eyebrow">Gemensam telefon</div>
+    <h1 class="title">Hitster Slumpare</h1>
+
+    <button class="action-btn" id="slumpBtn" onclick="slumpaUtmaning()">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <circle cx="50" cy="50" r="46" fill="#1a0b14" stroke="#1a0b14" stroke-width="2"/>
+            <circle cx="50" cy="50" r="36" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="26" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="14" fill="#1a0b14" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="4" fill="rgba(255,255,255,0.6)"/>
+        </svg>
+        Slumpa Utmaning!
+    </button>
 
     <div id="resultatBox">
+        <div class="result-icon" id="utmaningIkon"></div>
         <div class="utmaning-titel" id="utmaningTitel"></div>
         <div class="utmaning-info" id="utmaningInfo"></div>
     </div>
-</div>
+</main>
 
 <script>
+const valen = [
+    {
+        titel: "Årtal ± 2 år",
+        info: "Gissa vilket år låten släpptes. Du vinner poäng/kortet om du är max 2 år ifrån det rätta svaret.",
+        farg: "var(--c-ar2)",
+        ikon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>'
+    },
+    {
+        titel: "Årtal ± 4 år",
+        info: "Gissa vilket år låten släpptes. Du får en generös felmarginal på upp till 4 år åt båda hållen!",
+        farg: "var(--c-ar4)",
+        ikon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>'
+    },
+    {
+        titel: "Årtionde",
+        info: "Du behöver inte pricka exakt år. Det räcker att du gissar rätt årtionde (t.ex. 80-talet, 90-talet).",
+        farg: "var(--c-artionde)",
+        ikon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>'
+    },
+    {
+        titel: "Före eller efter 2000?",
+        info: "Det enklaste valet! Gissa bara om låten släpptes före år 2000, eller år 2000 och senare.",
+        farg: "var(--c-sekel)",
+        ikon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 5h9l-2 3 2 3H5"/></svg>'
+    },
+    {
+        titel: "Artist",
+        info: "Glöm årtalet! För att ta poäng på den här låten måste du kunna namnet på artisten eller gruppen.",
+        farg: "var(--c-artist)",
+        ikon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M9 21h6"/></svg>'
+    }
+];
+
+let slumpar = false;
+
 function slumpaUtmaning() {
-    const valen = [
-        { titel: "Årtal ± 2 år", info: "Gissa vilket år låten släpptes. Du vinner poäng/kortet om du är max 2 år ifrån det rätta svaret.", farg: "#e74c3c" },
-        { titel: "Årtal ± 4 år", info: "Gissa vilket år låten släpptes. Du får en generös felmarginal på upp till 4 år åt båda hållen!", farg: "#3498db" },
-        { titel: "Årtionde", info: "Du behöver inte pricka exakt år. Det räcker att du gissar rätt årtionde (t.ex. 80-talet, 90-talet).", farg: "#9b59b6" },
-        { titel: "Före eller efter 2000?", info: "Det enklaste valet! Gissa bara om låten släpptes före år 2000, eller år 2000 och senare.", farg: "#2ecc71" },
-        { titel: "Artist", info: "Glöm årtalet! För att ta poäng på den här låten måste du kunna namnet på artisten eller gruppen.", farg: "#f1c40f" }
-    ];
+    if (slumpar) return;
+    slumpar = true;
 
-    const slumpIndex = Math.floor(Math.random() * valen.length);
-    const vald = valen[slumpIndex];
-
+    const btn = document.getElementById('slumpBtn');
     const resultatBox = document.getElementById('resultatBox');
     const utmaningTitel = document.getElementById('utmaningTitel');
     const utmaningInfo = document.getElementById('utmaningInfo');
+    const utmaningIkon = document.getElementById('utmaningIkon');
 
-    utmaningTitel.innerText = vald.titel;
-    utmaningInfo.innerText = vald.info;
+    btn.classList.add('spinning');
+    resultatBox.classList.remove('show');
 
-    utmaningTitel.style.color = vald.farg;
-    resultatBox.style.borderColor = vald.farg;
-    resultatBox.style.boxShadow = `0 0 20px ${vald.farg}66`;
+    // Kort "rullande" effekt genom alternativen innan slutresultatet visas
+    let varv = 0;
+    const maxVarv = 10;
+    const rullning = setInterval(() => {
+        const slumpVisning = valen[Math.floor(Math.random() * valen.length)];
+        utmaningTitel.innerText = slumpVisning.titel;
+        utmaningTitel.style.color = slumpVisning.farg;
+        resultatBox.style.setProperty('--card-glow', slumpVisning.farg);
+        resultatBox.style.display = 'block';
+        varv++;
 
-    resultatBox.style.display = 'block';
+        if (varv >= maxVarv) {
+            clearInterval(rullning);
+
+            const vald = valen[Math.floor(Math.random() * valen.length)];
+            utmaningTitel.innerText = vald.titel;
+            utmaningInfo.innerText = vald.info;
+            utmaningIkon.innerHTML = vald.ikon;
+
+            utmaningTitel.style.color = vald.farg;
+            utmaningIkon.style.color = vald.farg;
+            resultatBox.style.setProperty('--card-glow', vald.farg);
+
+            resultatBox.classList.remove('show');
+            void resultatBox.offsetWidth; // starta om reveal-animationen
+            resultatBox.classList.add('show');
+
+            btn.classList.remove('spinning');
+            slumpar = false;
+        }
+    }, 60);
 }
 </script>
 
