@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../data/challenges.dart';
 import '../theme/app_colors.dart';
+import 'challenge_glyphs.dart';
 
 /// A five-slice prize wheel — one slice per [Challenge] — used by the
 /// generator screen. [rotation] is in radians and is expected to be
@@ -223,7 +224,7 @@ class _WheelPainter extends CustomPainter {
         ..strokeWidth = badgeRadius * 0.1
         ..color = challenge.farg.withValues(alpha: 0.4),
     );
-    _paintIcon(canvas, challenge.ikon, offset, r * 0.155, challenge.farg);
+    paintChallengeGlyph(canvas, challenge.glyph, offset, r * 0.155, challenge.farg);
   }
 
   void _paintPin(Canvas canvas, Offset center, double radius) {
@@ -301,22 +302,6 @@ class _WheelPainter extends CustomPainter {
         ..color = Colors.white.withValues(alpha: 0.55),
     );
     canvas.drawCircle(center, r * 0.045, Paint()..color = AppColors.bg1);
-  }
-
-  void _paintIcon(Canvas canvas, IconData icon, Offset offset, double fontSize, Color color) {
-    final painter = TextPainter(
-      textDirection: TextDirection.ltr,
-      text: TextSpan(
-        text: String.fromCharCode(icon.codePoint),
-        style: TextStyle(
-          fontSize: fontSize,
-          fontFamily: icon.fontFamily,
-          package: icon.fontPackage,
-          color: color,
-        ),
-      ),
-    )..layout();
-    painter.paint(canvas, offset.translate(-painter.width / 2, -painter.height / 2));
   }
 
   @override
