@@ -22,8 +22,8 @@
     --accent-gradient-soft: linear-gradient(135deg, rgba(255, 46, 136, 0.18), rgba(34, 211, 238, 0.18));
 
     --c-ar2: #ff5c72;       /* Röd — Årtal ± 2 år */
-    --c-ar4: #1e8fff;       /* Blå — Årtal ± 4 år */
-    --c-artionde: #a239ea;  /* Lila — Årtionde */
+    --c-ar4: #3b9eff;       /* Blå — Årtal ± 4 år */
+    --c-artionde: #6b21a8;  /* Lila — Årtionde */
     --c-sekel: #2fe0a8;     /* Grön — Före/efter 2000 */
     --c-artist: #ffd166;    /* Gul — Artist */
 

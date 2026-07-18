@@ -24,8 +24,8 @@ class AppColors {
   // Challenge category colors — kept consistent across generator, bingo
   // grid and rules legend.
   static const cAr2 = Color(0xFFFF5C72); // Röd — Årtal ± 2 år
-  static const cAr4 = Color(0xFF1E8FFF); // Blå — Årtal ± 4 år
-  static const cArtionde = Color(0xFFA239EA); // Lila — Årtionde
+  static const cAr4 = Color(0xFF3B9EFF); // Blå — Årtal ± 4 år
+  static const cArtionde = Color(0xFF6B21A8); // Lila — Årtionde
   static const cSekel = Color(0xFF2FE0A8); // Grön — Före/efter 2000
   static const cArtist = Color(0xFFFFD166); // Gul — Artist
 
