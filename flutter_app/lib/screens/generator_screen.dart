@@ -30,6 +30,10 @@ class _GeneratorScreenState extends State<GeneratorScreen>
   late final AnimationController _revealController;
   late final Animation<double> _revealAnimation;
 
+  late final AnimationController _landController;
+  late final Animation<double> _bounceAnimation;
+  late final Animation<double> _glowAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -45,12 +49,32 @@ class _GeneratorScreenState extends State<GeneratorScreen>
       parent: _revealController,
       curve: const Cubic(0.2, 0.7, 0.3, 1.0),
     );
+    _landController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 650),
+    );
+    _bounceAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(begin: 1.0, end: 1.1).chain(CurveTween(curve: Curves.easeOut)),
+        weight: 35,
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: 1.1, end: 0.97).chain(CurveTween(curve: Curves.easeInOut)),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween(begin: 0.97, end: 1.0).chain(CurveTween(curve: Curves.easeOut)),
+        weight: 35,
+      ),
+    ]).animate(_landController);
+    _glowAnimation = CurvedAnimation(parent: _landController, curve: Curves.easeOut);
   }
 
   @override
   void dispose() {
     _wheelController.dispose();
     _revealController.dispose();
+    _landController.dispose();
     super.dispose();
   }
 
@@ -82,6 +106,7 @@ class _GeneratorScreenState extends State<GeneratorScreen>
         _spinning = false;
       });
       _revealController.forward(from: 0);
+      _landController.forward(from: 0);
     });
   }
 
@@ -123,11 +148,32 @@ class _GeneratorScreenState extends State<GeneratorScreen>
                         const GradientText('Hitster Slumpare', fontSize: 22),
                         const SizedBox(height: 14),
                         AnimatedBuilder(
-                          animation: _wheelAnimation,
-                          builder: (context, _) => SpinWheel(
-                            rotation: _wheelAnimation.value,
-                            size: 168,
-                          ),
+                          animation: Listenable.merge([_wheelAnimation, _landController]),
+                          builder: (context, _) {
+                            final glowColor = _shown?.farg ?? AppColors.accent1;
+                            final glowOpacity = (1 - _glowAnimation.value).clamp(0.0, 1.0) * 0.55;
+                            return Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: glowOpacity > 0.01
+                                    ? [
+                                        BoxShadow(
+                                          color: glowColor.withValues(alpha: glowOpacity),
+                                          blurRadius: 46,
+                                          spreadRadius: 6,
+                                        ),
+                                      ]
+                                    : null,
+                              ),
+                              child: Transform.scale(
+                                scale: _bounceAnimation.value,
+                                child: SpinWheel(
+                                  rotation: _wheelAnimation.value,
+                                  size: 168,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 14),
                         GradientButton(
