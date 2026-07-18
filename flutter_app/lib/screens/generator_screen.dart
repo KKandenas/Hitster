@@ -8,7 +8,6 @@ import '../widgets/challenge_glyphs.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
 import '../widgets/gradient_text.dart';
-import '../widgets/sfx_pool.dart';
 import '../widgets/spin_wheel.dart';
 import 'bingo_screen.dart';
 
@@ -36,17 +35,13 @@ class _GeneratorScreenState extends State<GeneratorScreen>
   late final Animation<double> _bounceAnimation;
   late final Animation<double> _glowAnimation;
 
-  final _tickSound = SfxPool('assets/assets/sounds/tick.wav');
-  final _chimeSound = SfxPool('assets/assets/sounds/land_chime.wav', poolSize: 2);
-  int _lastTickIndex = 0;
-
   @override
   void initState() {
     super.initState();
     _wheelController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2600),
-    )..addListener(_onWheelTick);
+    );
     _revealController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -84,19 +79,6 @@ class _GeneratorScreenState extends State<GeneratorScreen>
     super.dispose();
   }
 
-  /// Fires a tick sound every time the wheel's rotation crosses a slice
-  /// boundary. Since rotation is driven by an easeOutCubic curve, this
-  /// naturally produces fast ticks while the wheel is spinning quickly
-  /// and progressively slower, spaced-out ticks as it decelerates — like
-  /// a real ratchet wheel — without needing a separate timer.
-  void _onWheelTick() {
-    final tickIndex = (_wheelAnimation.value / SpinWheel.sliceAngle).floor();
-    if (tickIndex != _lastTickIndex) {
-      _lastTickIndex = tickIndex;
-      _tickSound.play();
-    }
-  }
-
   void _slumpaUtmaning() {
     if (_spinning) return;
 
@@ -108,8 +90,6 @@ class _GeneratorScreenState extends State<GeneratorScreen>
     final extraTurns = 4 + _random.nextInt(3); // 4-6 full spins for effect
     delta += extraTurns * 2 * pi;
     final newRotation = _wheelRotation + delta;
-
-    _lastTickIndex = (_wheelRotation / SpinWheel.sliceAngle).floor();
 
     setState(() {
       _spinning = true;
@@ -128,7 +108,6 @@ class _GeneratorScreenState extends State<GeneratorScreen>
       });
       _revealController.forward(from: 0);
       _landController.forward(from: 0);
-      _chimeSound.play();
     });
   }
 
