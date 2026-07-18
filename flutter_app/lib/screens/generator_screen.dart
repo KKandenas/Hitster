@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../data/challenges.dart';
@@ -8,7 +7,7 @@ import '../widgets/app_nav_bar.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
 import '../widgets/gradient_text.dart';
-import '../widgets/vinyl_logo.dart';
+import '../widgets/spin_wheel.dart';
 import 'bingo_screen.dart';
 
 class GeneratorScreen extends StatefulWidget {
@@ -19,11 +18,14 @@ class GeneratorScreen extends StatefulWidget {
 }
 
 class _GeneratorScreenState extends State<GeneratorScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final _random = Random();
-  Timer? _rollTimer;
-  bool _rolling = false;
+  bool _spinning = false;
   Challenge? _shown;
+  double _wheelRotation = 0;
+
+  late final AnimationController _wheelController;
+  Animation<double> _wheelAnimation = const AlwaysStoppedAnimation(0);
 
   late final AnimationController _revealController;
   late final Animation<double> _revealAnimation;
@@ -31,6 +33,10 @@ class _GeneratorScreenState extends State<GeneratorScreen>
   @override
   void initState() {
     super.initState();
+    _wheelController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2600),
+    );
     _revealController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -43,33 +49,39 @@ class _GeneratorScreenState extends State<GeneratorScreen>
 
   @override
   void dispose() {
-    _rollTimer?.cancel();
+    _wheelController.dispose();
     _revealController.dispose();
     super.dispose();
   }
 
   void _slumpaUtmaning() {
-    if (_rolling) return;
+    if (_spinning) return;
+
+    final index = _random.nextInt(challenges.length);
+    final targetMod = SpinWheel.targetRotationFor(index);
+    final currentMod = _wheelRotation % (2 * pi);
+    var delta = targetMod - currentMod;
+    if (delta <= 0) delta += 2 * pi;
+    final extraTurns = 4 + _random.nextInt(3); // 4-6 full spins for effect
+    delta += extraTurns * 2 * pi;
+    final newRotation = _wheelRotation + delta;
+
     setState(() {
-      _rolling = true;
-      _revealController.value = 0;
+      _spinning = true;
+      _shown = null;
+      _wheelAnimation = Tween<double>(begin: _wheelRotation, end: newRotation).animate(
+        CurvedAnimation(parent: _wheelController, curve: Curves.easeOutCubic),
+      );
     });
 
-    var ticks = 0;
-    const maxTicks = 10;
-    _rollTimer = Timer.periodic(const Duration(milliseconds: 60), (timer) {
+    _wheelController.forward(from: 0).whenComplete(() {
+      if (!mounted) return;
       setState(() {
-        _shown = challenges[_random.nextInt(challenges.length)];
+        _wheelRotation = newRotation;
+        _shown = challenges[index];
+        _spinning = false;
       });
-      ticks++;
-      if (ticks >= maxTicks) {
-        timer.cancel();
-        setState(() {
-          _shown = challenges[_random.nextInt(challenges.length)];
-          _rolling = false;
-        });
-        _revealController.forward(from: 0);
-      }
+      _revealController.forward(from: 0);
     });
   }
 
@@ -110,27 +122,24 @@ class _GeneratorScreenState extends State<GeneratorScreen>
                         const EyebrowChip(label: 'Gemensam telefon'),
                         const SizedBox(height: 14),
                         const GradientText('Hitster Slumpare', fontSize: 26),
-                        const SizedBox(height: 26),
+                        const SizedBox(height: 22),
+                        AnimatedBuilder(
+                          animation: _wheelAnimation,
+                          builder: (context, _) => SpinWheel(
+                            rotation: _wheelAnimation.value,
+                            size: 220,
+                          ),
+                        ),
+                        const SizedBox(height: 22),
                         GradientButton(
                           onPressed: _slumpaUtmaning,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              VinylLogo(
-                                size: 26,
-                                spin: _rolling,
-                                spinDuration: const Duration(milliseconds: 500),
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                'Slumpa Utmaning!',
-                                style: TextStyle(
-                                  color: GradientButton.onDark,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            _spinning ? 'Snurrar…' : 'Slumpa Utmaning!',
+                            style: const TextStyle(
+                              color: GradientButton.onDark,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         if (_shown != null) ...[
@@ -139,7 +148,7 @@ class _GeneratorScreenState extends State<GeneratorScreen>
                             scale: Tween(begin: 0.94, end: 1.0).animate(_revealAnimation),
                             child: FadeTransition(
                               opacity: _revealAnimation,
-                              child: _ResultCard(challenge: _shown!, rolling: _rolling),
+                              child: _ResultCard(challenge: _shown!),
                             ),
                           ),
                         ],
@@ -158,9 +167,8 @@ class _GeneratorScreenState extends State<GeneratorScreen>
 
 class _ResultCard extends StatelessWidget {
   final Challenge challenge;
-  final bool rolling;
 
-  const _ResultCard({required this.challenge, required this.rolling});
+  const _ResultCard({required this.challenge});
 
   @override
   Widget build(BuildContext context) {
@@ -171,14 +179,12 @@ class _ResultCard extends StatelessWidget {
         color: AppColors.surfaceSolid,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: challenge.farg, width: 2),
-        boxShadow: rolling
-            ? []
-            : [
-                BoxShadow(
-                  color: challenge.farg.withValues(alpha: 0.35),
-                  blurRadius: 24,
-                ),
-              ],
+        boxShadow: [
+          BoxShadow(
+            color: challenge.farg.withValues(alpha: 0.35),
+            blurRadius: 24,
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -193,18 +199,16 @@ class _ResultCard extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          if (!rolling) ...[
-            const SizedBox(height: 10),
-            Text(
-              challenge.info,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppColors.textMuted,
-                fontSize: 15,
-                height: 1.4,
-              ),
+          const SizedBox(height: 10),
+          Text(
+            challenge.info,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: AppColors.textMuted,
+              fontSize: 15,
+              height: 1.4,
             ),
-          ],
+          ),
         ],
       ),
     );
