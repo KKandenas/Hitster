@@ -4,6 +4,7 @@ import '../data/challenges.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_background.dart';
 import '../widgets/app_nav_bar.dart';
+import '../widgets/challenge_glyphs.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/gradient_button.dart';
 import '../widgets/gradient_text.dart';
@@ -233,7 +234,7 @@ class _ResultCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(challenge.ikon, color: challenge.farg, size: 30),
+          ChallengeGlyphIcon(glyph: challenge.glyph, color: challenge.farg, size: 34),
           const SizedBox(height: 8),
           Text(
             challenge.titel,
