@@ -93,7 +93,7 @@ class _GeneratorScreenState extends State<GeneratorScreen>
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -114,36 +114,35 @@ class _GeneratorScreenState extends State<GeneratorScreen>
                       ),
                     ],
                   ),
-                  const SizedBox(height: 22),
+                  const SizedBox(height: 14),
                   GlassCard(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const EyebrowChip(label: 'Gemensam telefon'),
+                        const GradientText('Hitster Slumpare', fontSize: 22),
                         const SizedBox(height: 14),
-                        const GradientText('Hitster Slumpare', fontSize: 26),
-                        const SizedBox(height: 22),
                         AnimatedBuilder(
                           animation: _wheelAnimation,
                           builder: (context, _) => SpinWheel(
                             rotation: _wheelAnimation.value,
-                            size: 220,
+                            size: 168,
                           ),
                         ),
-                        const SizedBox(height: 22),
+                        const SizedBox(height: 14),
                         GradientButton(
                           onPressed: _slumpaUtmaning,
                           child: Text(
                             _spinning ? 'Snurrar…' : 'Slumpa Utmaning!',
                             style: const TextStyle(
                               color: GradientButton.onDark,
-                              fontSize: 18,
+                              fontSize: 17,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
                         if (_shown != null) ...[
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 14),
                           ScaleTransition(
                             scale: Tween(begin: 0.94, end: 1.0).animate(_revealAnimation),
                             child: FadeTransition(
@@ -174,7 +173,7 @@ class _ResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       decoration: BoxDecoration(
         color: AppColors.surfaceSolid,
         borderRadius: BorderRadius.circular(14),
@@ -188,25 +187,25 @@ class _ResultCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(challenge.ikon, color: challenge.farg, size: 40),
-          const SizedBox(height: 12),
+          Icon(challenge.ikon, color: challenge.farg, size: 30),
+          const SizedBox(height: 8),
           Text(
             challenge.titel,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: challenge.farg,
-              fontSize: 25,
+              fontSize: 19,
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 6),
           Text(
             challenge.info,
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: AppColors.textMuted,
-              fontSize: 15,
-              height: 1.4,
+              fontSize: 13,
+              height: 1.35,
             ),
           ),
         ],

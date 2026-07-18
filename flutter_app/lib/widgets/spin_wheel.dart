@@ -94,7 +94,10 @@ class _WheelPainter extends CustomPainter {
     final center = size.center(Offset.zero);
     final r = size.width / 2;
     const sliceAngle = SpinWheel.sliceAngle;
-    const startOffset = -math.pi / 2 - sliceAngle / 2;
+    // Slice i spans [startOffset + i*sliceAngle, startOffset + (i+1)*sliceAngle),
+    // so its center sits at startOffset + (i+0.5)*sliceAngle — this must match
+    // the center angle assumed by [SpinWheel.targetRotationFor].
+    const startOffset = -math.pi / 2;
 
     canvas.drawCircle(
       center,
